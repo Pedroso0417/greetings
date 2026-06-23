@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flower For You</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:linear-gradient(135deg,#ffd6e7,#ff9eb5);
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+/* Title */
+h1{
+    color:white;
+    margin-bottom:20px;
+    text-shadow:0 0 10px rgba(255,255,255,.8);
+    z-index:10;
+}
+
+/* Scene container */
+.scene{
+    position:relative;
+    width:500px;
+    height:550px;
+    z-index:10;
+}
+
+/* Bird (FIXED) */
+.bird{
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:70px;
+    animation:fly 4s ease-in-out infinite;
+}
+
+@keyframes fly{
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(-20px);}
+}
+
+/* Hearts */
+.heart{
+    position:absolute;
+    font-size:35px;
+    animation:float 3s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+/* Flower center */
+.flower{
+    position:absolute;
+    left:50%;
+    top:58%;
+    transform:translate(-50%,-50%);
+}
+
+.rose{
+    position:relative;
+    width:120px;
+    height:120px;
+}
+
+/* petals */
+.petal{
+    position:absolute;
+    background:linear-gradient(145deg,#ff2d75,#ff80ab);
+    border-radius:50% 50% 45% 45%;
+}
+
+.petal1{width:70px;height:90px;left:25px;top:15px;}
+.petal2{width:60px;height:80px;left:0;top:20px;transform:rotate(-30deg);}
+.petal3{width:60px;height:80px;right:0;top:20px;transform:rotate(30deg);}
+.petal4{width:55px;height:70px;left:18px;top:-5px;transform:rotate(-15deg);}
+.petal5{width:55px;height:70px;right:18px;top:-5px;transform:rotate(15deg);}
+
+/* stem */
+.stem{
+    width:10px;
+    height:180px;
+    background:linear-gradient(green,#006400);
+    margin:auto;
+}
+
+.leaf{
+    position:absolute;
+    width:45px;
+    height:22px;
+    background:#2ecc71;
+    border-radius:50% 0;
+}
+
+.leaf1{top:180px;left:20px;transform:rotate(-35deg);}
+.leaf2{top:220px;right:20px;transform:rotate(145deg);}
+
+/* Falling flowers */
+.falling-flower{
+    position:fixed;
+    top:-50px;
+    font-size:30px;
+    pointer-events:none;
+    animation:fall linear forwards;
+    z-index:1;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-50px) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌹 THE FLOWER IS FOR YOU!!! 🌹</h1>
+
+<div class="scene">
+
+    <!-- Bird FIXED -->
+    <div class="bird">🕊️</div>
+
+    <!-- Hearts -->
+    <div class="heart" style="top:120px;left:50px;">❤️</div>
+    <div class="heart" style="top:120px;right:50px;">❤️</div>
+    <div class="heart" style="top:200px;left:10px;">❤️</div>
+    <div class="heart" style="top:200px;right:10px;">❤️</div>
+    <div class="heart" style="bottom:120px;left:60px;">❤️</div>
+    <div class="heart" style="bottom:120px;right:60px;">❤️</div>
+
+    <!-- Flower -->
+    <div class="flower">
+        <div class="rose">
+            <div class="petal petal1"></div>
+            <div class="petal petal2"></div>
+            <div class="petal petal3"></div>
+            <div class="petal petal4"></div>
+            <div class="petal petal5"></div>
+        </div>
+
+        <div class="stem"></div>
+        <div class="leaf leaf1"></div>
+        <div class="leaf leaf2"></div>
+    </div>
+
+</div>
+
+<script>
+// heart colors
+const hearts=document.querySelectorAll(".heart");
+
+setInterval(()=>{
+    const colors=["red","#ff1493","#ff69b4","#ff3366"];
+    hearts.forEach(h=>{
+        h.style.color=colors[Math.floor(Math.random()*colors.length)];
+    });
+},800);
+
+// falling flowers
+function createFlower(){
+    const flower=document.createElement("div");
+    flower.classList.add("falling-flower");
+
+    const list=["🌹","🌸","🌺","🌷","💮"];
+    flower.innerHTML=list[Math.floor(Math.random()*list.length)];
+
+    flower.style.left=Math.random()*window.innerWidth+"px";
+    flower.style.animationDuration=(4+Math.random()*4)+"s";
+
+    document.body.appendChild(flower);
+
+    setTimeout(()=>flower.remove(),8000);
+}
+
+setInterval(createFlower,300);
+</script>
+
+</body>
+</html>
